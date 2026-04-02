@@ -33,4 +33,18 @@ public class ProductService {
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
+
+    public List<Product> searchByName(String name) {
+        return productRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    public List<Product> searchByCategory(String category) {
+        return productRepository.findByCategory(category);
+    }
+
+    public List<Product> getLowStockProducts(int threshold) {
+        return productRepository.findAll().stream()
+                .filter(p -> p.getQuantity() < threshold)
+                .toList();
+    }
 }
